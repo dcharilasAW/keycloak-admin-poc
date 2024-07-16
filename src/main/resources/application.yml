@@ -1,0 +1,40 @@
+keycloak:
+  server:
+    url: http://localhost:8180
+  admin:
+    username: admin
+    password: admin
+    realm: master
+
+configuration:
+  realms:
+    - name: genesis
+      clients:
+        - clientId: genesis-pam
+          clientSecret: CRgjDXUmxbhPR7J9qWyxdL80qLm2kH8O
+          service-account-enabled: true
+          direct-access-grant: true
+        - clientId: genesis-dbg
+          clientSecret: m0Fo2jnlC4xvfOgf2egmEpcIJtdzzTYs
+          service-account-enabled: true
+          direct-access-grant: true
+        - clientId: genesis-his
+          clientSecret: w3eWDOucsFE5Vt37PhOs5G0Jz3SZfE34
+          service-account-enabled: true
+          direct-access-grant: true
+        - clientId: genesis-web
+          clientSecret: EGOEPYNPshkfsgRtWaYIzQ2biKaHqtDT
+          redirect-uris: http://localhost:3000/api/auth/token
+          base-url: http://localhost:3000
+          service-account-enabled: false
+          direct-access-grant: false
+        - clientId: genesis-scheduler
+          clientSecret: zBKGwdw2QFGOsSbpjkYgTlFUfES0wfJZ
+          service-account-enabled: true
+          direct-access-grant: true
+      users:
+        - username: middleware-user
+          password: pass123
+          email: middleware-user@example.com
+          firstname: "First"
+          lastname: "Last"
