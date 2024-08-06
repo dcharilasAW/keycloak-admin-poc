@@ -40,6 +40,9 @@ public class KeycloakAdminService {
     }
 
     public void createClient(String realmName, Client client) {
+        // delete the client if it already exists
+        keycloak.realm(realmName).clients().get(client.getClientId()).remove();
+
         // Create a new client in the new realm
         ClientRepresentation newClient = new ClientRepresentation();
         newClient.setClientId(client.getClientId());
@@ -56,6 +59,9 @@ public class KeycloakAdminService {
     }
 
     public void createUser(String realmName, User user) {
+        // delete the user if it already exists
+        keycloak.realm(realmName).users().get(user.getUsername()).remove();
+
         UserRepresentation newUser = new UserRepresentation();
         newUser.setUsername(user.getUsername());
         newUser.setEmail(user.getEmail());
