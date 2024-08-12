@@ -22,7 +22,8 @@ public class KeycloakAdminService {
 
     public KeycloakAdminService(Keycloak keycloak, RealmConfig realmConfig) {
         this.keycloak = keycloak;
-        realmConfig.getRealms().forEach(this::createRealm);
+        //TODO enable
+        //realmConfig.getRealms().forEach(this::createRealm);
     }
 
     public void createRealm(Realm realm) {

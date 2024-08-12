@@ -38,3 +38,13 @@ configuration:
           email: middleware-user@example.com
           firstname: "First"
           lastname: "Last"
+
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5443/keycloak
+    driverClassName: org.postgresql.Driver
+    username: keycloak
+    password: password
+  liquibase:
+    change-log: classpath:/db/changelog/changes/db.changelog-master.yaml

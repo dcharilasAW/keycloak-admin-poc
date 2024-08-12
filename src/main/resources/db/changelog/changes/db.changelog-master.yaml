@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: classpath:/db/changelog/changes/001-create-players-realm.sql
+  - include:
+      file: classpath:/db/changelog/changes/002-create-players-realm-default-clients.sql
