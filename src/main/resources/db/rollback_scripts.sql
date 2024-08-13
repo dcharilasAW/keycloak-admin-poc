@@ -18,7 +18,8 @@ delete from public.component where realm_id = ANY(REALM_IDS);
 delete from public.required_action_provider where realm_id = ANY(REALM_IDS);
 delete from public.redirect_uris where client_id in (select id from public.client where realm_id = ANY(REALM_IDS));
 delete from public.web_origins where client_id in (select id from public.client where realm_id = ANY(REALM_IDS));
-delete from public.client where realm_id = ANY(REALM_IDS);
+delete from public.client_attributes where client_id in (select id from public.client where realm_id = ANY(REALM_IDS));
+delete from public.client where realm_id = ANY(REALM_IDS) or client_id like 'genesis-%-realm';
 delete from public.realm where id = ANY(REALM_IDS);
 delete from public.databasechangelog where id = 'raw';
 

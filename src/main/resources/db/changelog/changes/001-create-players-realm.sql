@@ -528,6 +528,15 @@ VALUES(gen_random_uuid (), 'webauthn-register-passwordless', 'Webauthn Register 
 INSERT INTO public.required_action_provider
 (id, alias, "name", realm_id, enabled, default_action, provider_id, priority)
 VALUES(gen_random_uuid (), 'VERIFY_PROFILE', 'Verify Profile', PLAYERS_REALM_ID, true, false, 'VERIFY_PROFILE', 90);
+
+---- update realm flows ----
+UPDATE public.realm SET (browser_flow) = (SELECT id FROM public.authentication_flow WHERE alias = 'browser' AND realm_id = PLAYERS_REALM_ID) WHERE id = PLAYERS_REALM_ID;
+UPDATE public.realm SET (registration_flow) = (SELECT id FROM public.authentication_flow WHERE alias = 'registration' AND realm_id = PLAYERS_REALM_ID) WHERE id = PLAYERS_REALM_ID;
+UPDATE public.realm SET (direct_grant_flow) = (SELECT id FROM public.authentication_flow WHERE alias = 'direct grant' AND realm_id = PLAYERS_REALM_ID) WHERE id = PLAYERS_REALM_ID;
+UPDATE public.realm SET (reset_credentials_flow) = (SELECT id FROM public.authentication_flow WHERE alias = 'reset credentials' AND realm_id = PLAYERS_REALM_ID) WHERE id = PLAYERS_REALM_ID;
+UPDATE public.realm SET (client_auth_flow) = (SELECT id FROM public.authentication_flow WHERE alias = 'clients' AND realm_id = PLAYERS_REALM_ID) WHERE id = PLAYERS_REALM_ID;
+UPDATE public.realm SET (docker_auth_flow) = (SELECT id FROM public.authentication_flow WHERE alias = 'docker auth' AND realm_id = PLAYERS_REALM_ID) WHERE id = PLAYERS_REALM_ID;
+
 END $$;
 
 COMMIT;
