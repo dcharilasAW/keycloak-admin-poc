@@ -44,7 +44,7 @@ NULL, 0, false, false, CONCAT(PLAYERS_REALM_NAME,' Realm'), false, 'client-secre
 ----- keycloak_role ------
 INSERT INTO public.keycloak_role
 (id, client_realm_constraint, client_role, description, "name", realm_id, client, realm)
-VALUES(gen_random_uuid (), PLAYERS_REALM_ID, false, '${role_default-roles}', 'default-roles-genesis', PLAYERS_REALM_ID, NULL, NULL);
+VALUES(gen_random_uuid (), PLAYERS_REALM_ID, false, '${role_default-roles}', CONCAT('default-roles-',PLAYERS_REALM_NAME), PLAYERS_REALM_ID, NULL, NULL);
 INSERT INTO public.keycloak_role
 (id, client_realm_constraint, client_role, description, "name", realm_id, client, realm)
 VALUES(gen_random_uuid (), REALM_MANAGEMENT_CLIENT_ID, true, '${role_realm-admin}', 'realm-admin', PLAYERS_REALM_ID, REALM_MANAGEMENT_CLIENT_ID, NULL);
@@ -533,7 +533,7 @@ SELECT
 
 ---- update realm admin client ----
 UPDATE public.realm SET master_admin_client = MASTER_ADMIN_CLIENT_ID WHERE id = PLAYERS_REALM_ID;
-
+UPDATE public.realm SET (default_role) = (SELECT id FROM public.keycloak_role WHERE name like 'default-roles-%' AND realm_id = PLAYERS_REALM_ID) WHERE id = PLAYERS_REALM_ID;
 
 END $$;
 
