@@ -3,6 +3,7 @@ BEGIN;
 DO $$
     DECLARE
         REALM_IDS TEXT[] := array['27e6487e-2bdf-4300-93de-f6de5fdb2a1a'];
+        CLIENT_IDS TEXT[] := array['13b87381-ff31-413c-bb98-1c1d9e9b58dd'];
     BEGIN
 
         -- realm
@@ -40,6 +41,15 @@ DO $$
         delete from public.protocol_mapper where client_scope_id is not null and client_scope_id in (select id from public.client_scope where realm_id = ANY(REALM_IDS));
         delete from public.client_scope where realm_id = ANY(REALM_IDS);
 
+
+        -- new clients
+        delete from public.protocol_mapper_config where protocol_mapper_id in (
+            select id from public.protocol_mapper where client_id is not null and client_id = ANY(CLIENT_IDS)
+        );
+        delete from public.protocol_mapper where client_id is not null and client_id = ANY(CLIENT_IDS);
+        delete from public.client_scope_client where client_id = ANY(CLIENT_IDS);
+        delete from public.client_attributes where client_id = ANY(CLIENT_IDS);
+        delete from public.client where id = ANY(CLIENT_IDS);
 
         -- final
         delete from public.keycloak_role where realm_id = ANY(REALM_IDS);
